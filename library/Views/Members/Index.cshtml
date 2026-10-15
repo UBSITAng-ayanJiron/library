@@ -30,8 +30,9 @@
                 <td>@(member.Email ?? "—")</td>
                 <td>@member.MemberType</td>
                 <td class="text-end">
-                    @* Task 15 puts the Edit button here *@
-                    @* Task 16 puts the Delete button here *@
+                    <a asp-action="Edit" asp-route-id="@member.MemberId" class="btn btn-sm btn-outline-secondary">Edit</a>
+
+                    <a asp-action="Delete" asp-route-id="@member.MemberId" class="btn btn-sm btn-outline-danger">Delete</a>
                 </td>
             </tr>
         }

@@ -52,23 +52,7 @@ public class MemberRepository
 
         await command.ExecuteNonQueryAsync();
     }
-    public IActionResult Create()
-    {
-        return View(new Member());
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(Member member)
-    {
-        if (!ModelState.IsValid)
-        {
-            return View(member);
-        }
-
-        await _members.AddAsync(member);
-        return RedirectToAction(nameof(Index));
-    }
+    
     public async Task<Member?> GetByIdAsync(long id)
     {
         const string sql = "SELECT member_id, full_name, email, member_type FROM lending.member WHERE member_id = @id;";
@@ -89,6 +73,16 @@ public class MemberRepository
         command.Parameters.AddWithValue("email", (object?)member.Email ?? DBNull.Value);
         command.Parameters.AddWithValue("type", member.MemberType);
         command.Parameters.AddWithValue("id", member.MemberId);
+
+        await command.ExecuteNonQueryAsync();
+    }
+
+    public async Task DeleteAsync(long id)
+    {
+        const string sql = "DELETE FROM lending.member WHERE member_id = @id;";
+
+        await using var command = _dataSource.CreateCommand(sql);
+        command.Parameters.AddWithValue("id", id);
 
         await command.ExecuteNonQueryAsync();
     }
