@@ -1,12 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap");
 
 :root {
-    --phosphor: #1aff80; /* main Pip-Boy green */
+    --phosphor: #1aff80; 
     --phosphor-dim: #0e9a4c;
     --phosphor-dark: #064d26;
-    --screen: #020d06; /* CRT glass */
+    --screen: #020d06; 
     --screen-soft: #051a0c;
-    --vault-yellow: #ffd23f; /* vault-suit trim, used sparingly */
+    --vault-yellow: #ffd23f; 
     --alert: #ff5a3c;
     --font-display: "VT323", "Courier New", monospace;
     --font-body: "Share Tech Mono", "Courier New", monospace;
@@ -33,17 +33,15 @@ body {
     background: radial-gradient(ellipse at center, #07260f 0%, var(--screen) 75%) fixed;
 }
 
-    /* CRT scanlines and a soft vignette over everything */
     body::before {
         content: "";
         position: fixed;
         inset: 0;
         pointer-events: none;
         z-index: 9999;
-        background: repeating-linear-gradient(180deg, rgba(0, 0, 0, .28) 0 1px, transparent 1px 3px), radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, .55) 100%);
+        background: repeating-linear-gradient(180deg, rgba(0, 0, 0, .22) 0 1px, transparent 1px 3px), radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, .5) 100%);
     }
 
-/* ---------- Headings: terminal readout ---------- */
 h1, h2, h3, h4 {
     font-family: var(--font-display);
     font-weight: 400;
@@ -84,7 +82,6 @@ a {
         text-shadow: var(--glow);
     }
 
-/* ---------- Navbar: the Pip-Boy tab strip ---------- */
 .navbar {
     background: var(--screen) !important;
     border-bottom: 2px solid var(--phosphor) !important;
@@ -98,22 +95,38 @@ a {
     text-shadow: var(--glow);
 }
 
-.navbar .nav-link,
-.navbar .nav-link.text-dark {
-    color: var(--phosphor) !important;
-    font-family: var(--font-display);
-    font-size: 1.35rem;
-    padding: .2rem 1rem;
-    margin: 0 .2rem;
-    border: 1px solid transparent;
+   the nav-link class (the Notes link was floating up and underlined). */
+.navbar-nav {
+    align-items: center;
 }
 
-    .navbar .nav-link:hover,
-    .navbar .nav-link:focus-visible {
-        background: var(--phosphor);
-        color: var(--screen) !important;
-        text-shadow: none;
+    .navbar-nav .nav-item {
+        display: flex;
+        align-items: center;
     }
+
+    .navbar-nav a,
+    .navbar-nav .nav-link,
+    .navbar .nav-link.text-dark {
+        display: inline-block;
+        color: var(--phosphor) !important;
+        font-family: var(--font-display);
+        font-size: 1.35rem;
+        line-height: 1.3;
+        text-decoration: none;
+        padding: .2rem 1rem;
+        margin: 0 .2rem;
+        border: 1px solid transparent;
+    }
+
+        .navbar-nav a:hover,
+        .navbar-nav a:focus-visible,
+        .navbar .nav-link:hover,
+        .navbar .nav-link:focus-visible {
+            background: var(--phosphor);
+            color: var(--screen) !important;
+            text-shadow: none;
+        }
 
 .navbar-toggler {
     border-color: var(--phosphor);
@@ -124,7 +137,6 @@ main.pb-3 {
     padding-top: 1rem;
 }
 
-/* ---------- Tables: inventory list ---------- */
 .table {
     --bs-table-bg: var(--screen);
     --bs-table-color: var(--phosphor);
@@ -138,7 +150,16 @@ main.pb-3 {
 
     .table > :not(caption) > * > * {
         border-bottom-color: rgba(26, 255, 128, .18);
-        padding: .6rem 1rem;
+        padding: .55rem 1rem;
+    }
+
+    .table td,
+    .table th {
+        vertical-align: middle;
+    }
+
+    .table td {
+        overflow-wrap: anywhere; 
     }
 
     .table thead.table-dark,
@@ -160,7 +181,25 @@ main.pb-3 {
         text-shadow: var(--glow);
     }
 
-/* Tags read like bracketed item types */
+    .table td.text-end,
+    .table td:last-child:has(.btn) {
+        white-space: nowrap;
+        width: 1%;
+    }
+
+    .table td .btn {
+        display: inline-block;
+        margin-left: .3rem;
+    }
+
+    .table td form {
+        display: inline-block;
+    }
+
+    .table td.text-muted {
+        color: var(--phosphor-dim) !important;
+    }
+
 .badge {
     font-family: var(--font-display);
     font-size: 1.05rem;
@@ -180,7 +219,6 @@ main.pb-3 {
         content: "]";
     }
 
-/* ---------- Buttons: menu options ---------- */
 .btn {
     font-family: var(--font-display);
     font-size: 1.3rem;
@@ -188,7 +226,13 @@ main.pb-3 {
     letter-spacing: .05em;
     border-radius: 0;
     border-width: 2px;
+    opacity: 1;
     transition: background-color .1s steps(2), color .1s steps(2);
+}
+
+.btn-sm {
+    font-size: 1.15rem;
+    padding: .15rem .7rem;
 }
 
 .btn-primary {
@@ -206,16 +250,27 @@ main.pb-3 {
         text-shadow: none;
     }
 
-.btn-outline-secondary {
+.btn-outline-secondary,
+.btn-outline-light,
+.btn-outline-primary,
+.btn-outline-info,
+.btn-secondary,
+.btn-light {
     background: transparent;
-    border-color: var(--phosphor-dim);
+    border-color: var(--phosphor);
     color: var(--phosphor);
 }
 
-    .btn-outline-secondary:hover {
-        background: var(--phosphor-dim);
-        border-color: var(--phosphor-dim);
+    .btn-outline-secondary:hover,
+    .btn-outline-light:hover,
+    .btn-outline-primary:hover,
+    .btn-outline-info:hover,
+    .btn-secondary:hover,
+    .btn-light:hover {
+        background: var(--phosphor);
+        border-color: var(--phosphor);
         color: var(--screen);
+        text-shadow: none;
     }
 
 .btn-outline-danger {
@@ -246,7 +301,11 @@ main.pb-3 {
         text-shadow: var(--glow);
     }
 
-/* ---------- Forms and cards ---------- */
+.btn:disabled,
+.btn.disabled {
+    opacity: .55;
+}
+
 .card {
     background: var(--screen);
     color: var(--phosphor);
@@ -297,7 +356,11 @@ dt {
     font-weight: 400;
 }
 
-/* ---------- Focus and footer ---------- */
+.d-flex.justify-content-between.align-items-center {
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
 a:focus-visible,
 button:focus-visible,
 .btn:focus-visible,
@@ -321,6 +384,13 @@ button:focus-visible,
         color: var(--phosphor);
     }
 
+@media (max-width: 640px) {
+    .table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     h1::after {
         animation: none;
@@ -331,3 +401,57 @@ button:focus-visible,
     }
 }
 
+
+.table td.text-end a,
+.table td.text-end button,
+.table td:last-child a,
+.table td:last-child button {
+    display: inline-block !important;
+    font-family: var(--font-display) !important;
+    font-size: 1.15rem !important;
+    line-height: 1.2 !important;
+    letter-spacing: .05em;
+    text-decoration: none !important;
+    padding: .15rem .7rem !important;
+    margin-left: .3rem;
+    background: transparent !important;
+    border: 2px solid var(--phosphor) !important;
+    border-radius: 0 !important;
+    color: var(--phosphor) !important;
+    opacity: 1 !important;
+    text-shadow: var(--glow);
+    cursor: pointer;
+}
+
+    .table td.text-end a:hover,
+    .table td.text-end button:hover,
+    .table td:last-child a:hover,
+    .table td:last-child button:hover,
+    .table td.text-end a:focus-visible,
+    .table td:last-child a:focus-visible {
+        background: var(--phosphor) !important;
+        color: var(--screen) !important;
+        text-shadow: none;
+    }
+
+.table td a[href*="Delete" i],
+.table td button[class*="danger"],
+.table td a[class*="danger"],
+.table td a[class*="delete" i] {
+    border-color: var(--alert) !important;
+    color: var(--alert) !important;
+    text-shadow: none;
+}
+
+    .table td a[href*="Delete" i]:hover,
+    .table td button[class*="danger"]:hover,
+    .table td a[class*="danger"]:hover,
+    .table td a[class*="delete" i]:hover {
+        background: var(--alert) !important;
+        color: var(--screen) !important;
+    }
+
+.table td form {
+    display: inline-block;
+    margin: 0;
+}
