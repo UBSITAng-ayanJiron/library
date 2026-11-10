@@ -5,7 +5,7 @@
 WITH ref AS (
     SELECT GREATEST(MAX(loaned_on), MAX(returned_on)) AS last_date FROM lending.loan
 )
-UPDATE lending.loan l
+UPDATE lending.loan 
 SET    loaned_on   = CURRENT_DATE - ROUND((ref.last_date - l.loaned_on)   / 4.0)::int - 1,
        returned_on = CURRENT_DATE - ROUND((ref.last_date - l.returned_on) / 4.0)::int - 1
 FROM   ref;
